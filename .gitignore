@@ -1,0 +1,39 @@
+# Arquivos objeto
+*.o
+*.obj
+
+# Executáveis
+*.exe
+*.out
+*.app
+*.elf
+
+# Bibliotecas
+*.so
+*.dll
+*.dylib
+*.a
+
+# Arquivos de debug
+*.log
+
+# Pasta de build
+build/
+bin/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# VS Code
+.vscode/
+
+# CodeBlocks
+*.layout
+*.depend
+
+# Sistema
+.DS_Store
+Thumbs.db
