@@ -17,10 +17,11 @@ void swap(int *v, int ind_a, int ind_b){
 }
 
 
+// Toda iteração do quick sort tem com base dividir o vetor em 2 e achar a posição certa do pivô
 static size_t partition(int *vet, int esq,int dir,int pivot){
     size_t pos, i;
 
-    swap(vet, pivot, dir); // O pivot sempre será o ultimo valor do vetor [|resto do vetor|pivot|]
+    swap(vet, pivot, dir); // joga o pivô pro final do vetor
     pos = esq; // pos marca o próximo lugar onde deve-se colocar um número menor que o pivô
 
     for(i = esq; i < dir; i++){ // Varre o vetor até o valor antes do pivô pois este está em dir
