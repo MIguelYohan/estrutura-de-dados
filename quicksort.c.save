@@ -1,0 +1,13 @@
+#include <stdio.h>
+
+// Escolha de um pivô (aleatório)
+// Divisao em dois vetores a partir do original
+// -> Maiores ou iguais que o pivô e Menores que o pivô
+// A escolha do pivô ocorre novamente
+// Isso ocorre recursivamente até que o vetor seja mínimo
+\5,4,6,3,2,8,(2)]
+# 2 [5,4,6,3,2,(8)]
+# [5,4,6,3,(2)] 8
+# 2 [5,4,6,(3)]
+# 3 [5,4,(6)]
+# [5,(4)] 6
