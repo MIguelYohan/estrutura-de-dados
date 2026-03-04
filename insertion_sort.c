@@ -9,9 +9,9 @@
 void insertion_sort(int *v, size_t size){
     int i, j, chosen;
 
-    for(i = 1; i < size; i++){ // controla a parte não ordenada, começando do segundo valor (próximo a ordenadar)
+    for(i = 1; i < size; i++){ // controla a parte não ordenada, começando do segundo valor (próximo a ordenar)
         chosen = v[i]; // primeiro valor dos não ordenados
-        for(j = i - 1; (j >= 0) && (chosen < v[j]); j--){ // controla a parte posta como já ordenada, j = i representa o proximo indice que o for exerterno iria examinar, -1 para pegar o ultimo ordenado.
+        for(j = i - 1; (j >= 0) && (chosen < v[j]); j--){ // controla a parte posta como já ordenada, j = i representa o proximo indice que o for externo iria examinar, -1 para pegar o ultimo ordenado.
             v[j+1] = v[j]; // abre espaço para incluir o valor chosen
         }
         v[j+1] = chosen; // ao final do for, ou seja, quando achou um valor menor ou o fim do vetor, adiciona o chosen neste local
