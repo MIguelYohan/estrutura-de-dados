@@ -8,9 +8,8 @@
 // Ao final imprimir o valor final de cadeiras necessárias para o dia
 
 typedef struct{
-    char time[18]; // Formato "HH:MM:SS HH:MM:SS\0" possui 17 caracteres + \0
-    char arrival_time[9];
-    char exit_time[9];
+    char time[9]; // Formato "HH:MM:SS"
+    int status;
 }Reserve;
 
 // Implementação do merge_sort
@@ -22,7 +21,9 @@ void merge(Reserve *v, Reserve *v1, Reserve *v2, size_t size){
     size_t k = 0;
 
     for (i = 0; j < size_v1 && k < size_v2; i ++){
-        if(strcmp(v1[j].arrival_time, v2[k].arrival_time) <= 0){
+        int cmp = strcmp(v1[j].time, v2[k].time);
+        if(cmp < 0 || (cmp == 0 && v1[j].status > v2[k].status)){
+            // Entradas vem antes de saídas no vetor ordenado quando entrada e saída são iguais
             v[i] = v1[j++];
         }
         
@@ -47,7 +48,7 @@ void merge_sort(Reserve *v, size_t size){
         mid = size / 2;
 
         Reserve *v1 = malloc(sizeof(Reserve) * mid);
-        Reserve *v2 = malloc(sizeof(Reserve) * size - mid);
+        Reserve *v2 = malloc(sizeof(Reserve) * (size - mid));
         
         int i;
         for(i = 0; i < mid; i++){
@@ -69,13 +70,17 @@ void merge_sort(Reserve *v, size_t size){
 
 int minimum_chair(Reserve *v, size_t size){
     int i;
-    int chairs = 1;
-    for(i = 0; i < size - 1; i++){
-        // Logica para saber se duas pessoas estão ao mesmo tempo no local
-        
+    int chairs = 0;
+    int max_chairs = 0;
+
+    for(i = 0; i < size; i++){
+        chairs += v[i].status;
+        if(chairs > max_chairs){
+            max_chairs = chairs;
+        }
     }
 
-    return chairs;
+    return max_chairs;
 }
 
 int main(){
@@ -83,23 +88,19 @@ int main(){
     scanf("%d", &n);
     getchar();
     
-    Reserve v[n];
+    Reserve v[2 * n]; // Recebe o dobro do valor pois recebe dois valores por vez
 
     for(int i = 0; i < n; i++){
-        scanf("%17[^\n]", v[i].time);
-        getchar();
-        // Separação dos valores de chegada e saída
-        strncpy(v[i].arrival_time, v[i].time, 8);
-        v[i].arrival_time[8] = '\0';
+    scanf("%s %s", v[2*i].time, v[2*i + 1].time);
 
-        strncpy(v[i].exit_time, v[i].time+9, 8);
-        v[i].exit_time[8] = '\0';
-    }
+    v[2*i].status = 1;      // chegada
+    v[2*i + 1].status = -1; // saída
+}
+    
+    merge_sort(v, 2*n);
+    int min_c = minimum_chair(v, 2*n);
 
-    merge_sort(v, n);
-    int min_c = minimum_chair(v, n);
-
-    printf("%d", min_c);
+    printf("%d\n", min_c);
 
     return 0;
 }
