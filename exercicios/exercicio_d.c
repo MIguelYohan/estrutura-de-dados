@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct{
     char name[30]; // Máximo de 30 caracteres
@@ -68,8 +69,34 @@ void merge_sort(DefaultTime *v, size_t size){
     }
 }
 
+int casting_value(char *string_value){
+    // retirar o "."
+    int sec; // segundos
+    int ms; // milesimos
+    sscanf(string_value, "%d.%d", &sec, &ms);
+    sec = sec * 1000;
+
+    return sec + ms;
+}
+
 void sum_classificatories(Classificatory *v, DefaultTime *times, size_t size){
-    // Somar os classificatorias e devolver um vetor com os tempos somados em milésimos junto com o nome do piloto
+    // Somar as classificatorias e devolver um vetor com os tempos somados em milésimos junto com o nome do piloto
+    int i;
+    // Fazer o casting dos valores strings para int
+    for(i = 0; i < size; i++){
+        int f_value;
+        int s_value;
+        int t_value;
+        int sum_ms; // Soma dos três valores em milisegundos
+        f_value = casting_value(v[i].first_time);
+        s_value = casting_value(v[i].second_time);
+        t_value = casting_value(v[i].third_time);
+        sum_ms = f_value + s_value + t_value;
+        
+        // Transfere o valor já somado para o outro vetor
+        times[i].time = sum_ms;
+        strcpy(times[i].name, v[i].name);
+    }
 }
 
 int main(){
