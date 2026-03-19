@@ -10,7 +10,7 @@ void merge(int *v, int *v1, int *v2, size_t size){
     size_t k = 0;
 
     for (i = 0; j < size_v1 && k < size_v2; i ++){
-        if (v1[j] <= v2[k]){ // O menor divide o maior
+        if (abs(v1[j]) <= abs(v2[k])){ // Para que o count_zeros nao pule os negativos
             v[i] = v1[j++];
         }
         
@@ -56,10 +56,22 @@ void merge_sort(int *v, size_t size){
     }
 }
 
-int is_balanced(int *v, size_t size){
+int count_zeros(int *v, size_t size){
+    int count_zeros = 0;
+    for(int i = 0; i < size; i++){
+        if(v[i] == 0){
+            count_zeros ++;
+        }
+    }
+    return count_zeros;
+}
+
+int is_balanced(int *v, size_t size, size_t count_zeros){
     int i;
-    for(int i = 0; i < size - 1; i++){
-        // Pensar na lógica para condicoes em que a sequencia ja ordenada e equilibrada
+    for(int i = count_zeros; i < size - 1; i++){
+        if((v[i] != 0 && (v[i] % v[i+1] != 0)) && (v[i+1] != 0 && (v[i+1] % v[i] != 0))){
+            return 0;
+        }
     }
     return 1;
 }
@@ -74,8 +86,8 @@ int main(){
     }
 
     merge_sort(v, n);
-
-    int response = is_balanced(v, n);
+    int count = count_zeros(v, n);
+    int response = is_balanced(v, n, count);
 
     if(response){
         printf("Sim");
