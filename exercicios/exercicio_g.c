@@ -24,9 +24,17 @@ void merge(Remainder *v, Remainder *v1, Remainder *v2, size_t size){
         }
 
         else if(v1[j].m_remainder == v2[k].m_remainder){
-            // Se um número for par e o outro for ímpar, o número ímpar precede o número par.
-            // Se os dois números forem pares, o menor deve preceder o maior.
-            // Se os dois números forem ímpares, o maior deve preceder o menor.
+            // Aqui possuem todas as condicionais separadas por OU, todas tem como resultado v2[k] primeiro por tanto unifiquei todas
+            if(
+                (v1[j].num_ori % 2 == 0 && v2[k].num_ori % 2 != 0) ||
+                ((v1[j].num_ori % 2 == 0 && v2[k].num_ori % 2 == 0) && v2[k].num_ori < v1[j].num_ori) ||
+                ((v1[j].num_ori % 2 != 0 && v2[k].num_ori % 2 != 0) && v1[j].num_ori < v2[k].num_ori)
+            ){
+                v[i] = v2[k++];
+            }
+            else{
+                v[i] = v1[j++];
+            }
         }
     }   
     
@@ -87,6 +95,6 @@ int main(){
     merge_sort(v, n);
 
     for(i = 0; i < n; i++){
-        printf("%d ", v[i].num_ori);
+        printf("%d\n", v[i].num_ori);
     }
 }
