@@ -22,4 +22,4 @@ int busca_binaria(int *v, size_t n, int key) {
 
     }
     return -1; /**Chave não encontrada**/
- }
+}
