@@ -1,11 +1,17 @@
 #include <stdio.h>
-#include <assert.h>
-#include <stdbool.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <assert.h>
 
-// Para a busca em amplitude/largura é necessário implementar uma pilha
-// EXPLICAÇÃO: A busca em amplitude precisa que os nós da arvore sejam processados sequencialmente de nivel em nivel
-// portanto é necessário uma fila para que nenhum nó "fique para trás"
+typedef struct tree_node_t{
+    int data;
+    struct tree_node_t *left;
+    struct tree_node_t *right;
+}tree_node_t;
+
+typedef struct tree_t{
+    tree_node_t *root;
+}tree_t;
 
 typedef struct queue_t {
     size_t front;
@@ -99,42 +105,31 @@ bool queue_empty(queue_t *q) {
     return queue_size(q) == 0;
 }
 
-typedef struct tree_node_t{
-    void *data;
-    struct tree_node_t *left;
-    struct tree_node_t *right;
-}tree_node_t;
+void bfs_node(tree_node_t *n){
+    queue_t *q;
+    queue_initialize(&q);
 
-typedef struct tree{
-    tree_node_t *root;
-}tree;
-
-// Busca em largura (BFS)
-void bfs(tree_node_t *root){
-    // Criando e inicializando a fila
-    queue_t* queue;
-    queue_initialize(&queue);
-
-    // Começa colocando a raiz (primeiro nó) na fila, se ele existir. 
-    if(root!=NULL){
-        queue_push(queue, root);
+    if (n != NULL){
+        queue_push(q, n);
     }
-    while(!queue_empty(queue)){
-        // Guarda o nó da frente da fila para processa-lo
-        tree_node_t *v = queue_front(queue);
-        process(v);
-        // Ordem de processo de nós: esquerda -> direita
-        // Pois na fila o da esquerda vai ser processado primeiro
+    while(!queue_empty(q)){
+        tree_node_t *t = queue_front(q);
+        printf("%d\n", t->data);
 
-        // Coloca os filhos na fila
-        if(v->left != NULL){
-            queue_push(queue, v->left);
+        if(t->left != NULL){
+            queue_push(q, t->left);
         }
-        if(v->right != NULL){
-            queue_push(queue, v->right);
+        if(t->right != NULL){
+            queue_push(q, t->right);
         }
-        // Tira o pai da fila pois já o processou
-        queue_pop(queue);
+        queue_pop(q);
     }
-    queue_delete(&queue);
+    queue_delete(&q);
 }
+
+void bfs(tree_t *t){
+    if(t->root != NULL){
+        bfs_node(t->root);
+    }
+}
+
