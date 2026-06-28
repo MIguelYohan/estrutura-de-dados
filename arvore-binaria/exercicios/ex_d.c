@@ -137,12 +137,8 @@ bool is_full(tree_t *t){
 
 // PODEMOS UTILIZAR UMA RECURSAO MAIS SIMPLES
 bool is_full_node(tree_node_t *n){
-    if(n == NULL){
-        return true;
-    }
-    if((n->left == NULL) != (n->right == NULL)){ // Possui apenas um filho
-        return false;
-    }
-    return is_full(n->left) && is_full(n->right); // A recursão vai propagar o false, se ocorrer
+    if((n->left == NULL) != (n->right == NULL)) return false;
+    if(n->left == NULL && n->right == NULL) return true;
 
+    return is_full_node(n->left) && is_full_node(n->right);
 }
