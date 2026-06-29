@@ -24,6 +24,8 @@ bool is_zigzag_node(tree_node_t *n){
         if(actual->right != NULL && actual->left != NULL){
             return false;
         }
+
+        // Tem só um filho
         if(actual->right != NULL){
             if(last_mov == 1){
                 return false;
@@ -49,4 +51,3 @@ bool is_zigzag(tree_t *t){
         return true;
     }
 }
-
